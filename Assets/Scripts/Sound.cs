@@ -8,7 +8,6 @@ public class Sound
 
     public AudioClip clip;
 
-
     //set ranges for each audio clip
     [Range(0f, 1f)]
     public float volume;
@@ -20,4 +19,9 @@ public class Sound
 
     //allows me to loop an audio clip in the inspector
     public bool loop;
+
+    public bool playOnAwake;
+
+    public bool isWalking;
+
 }

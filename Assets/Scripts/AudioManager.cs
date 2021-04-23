@@ -22,18 +22,22 @@ public class AudioManager : MonoBehaviour
 
         foreach(Sound s in sounds)
         {
-            s.source = gameObject.GetComponent<AudioSource>();
+            s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
 
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
+            s.source.playOnAwake = s.playOnAwake;
         }
     }
 
     private void Start()
     {
         Play("Theme");
+        Play("Rain");
+        Play("Ghost");
+        Play("Breathing");
     }
 
     public void Play (string name)
@@ -43,9 +47,30 @@ public class AudioManager : MonoBehaviour
         //reutrns an error message if the audio source is not found
         if (s == null)
         {
-            Debug.LogWarning("Sound; " + name + "not found");
+            Debug.LogWarning("Sound: " + name + " not found");
             return;
         }
-        s.source.Play();
+
+        if (!s.source.isPlaying)
+        {
+            s.source.Play();
+        }
+    }
+
+    public void Pause(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+
+        //reutrns an error message if the audio source is not found
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found");
+            return;
+        }
+
+        if (s.source.isPlaying)
+        {
+            s.source.Pause();
+        }
     }
 }
